@@ -24,45 +24,47 @@
     <script>
       var name ='guest';
       var socket = io();
-
-      function myFunction() {
-          name = prompt("Please enter your name", "test");
-          if (name != null) {
-              socket.emit('register', name.toString());
-          }
-          else {
-              socket.emit('register', name.toString());
-          }
-      }
-
-      //input user id
-      myFunction();
-
-
-      $('form').submit(function(){
-
-        socket.emit('chat message', $('#m').val());
-        $('#m').val(''); //reset input value
-        return false;
-      });
-
-      socket.on('chat message', function(data){
-        console.log('socketname'+ data.username);
-        console.log('name'+ name);
-        var showname = name == data.username ? 'Me' : data.username;
-        $('#messages').append($('<li>').text( showname+ ': '+data.msg));
-      });
-
-
-      socket.on('user left', function(data){
-        $('#messages').append($('<li>').text(data.username+ ' is leaving.'));
-      })
-
-      $("#m").keydown(function(event){
-        if ( event.which == 13 ){
-          $('#send').click();
+      $(document).ready(function(){
+        function myFunction() {
+            name = prompt("Please enter your name", "test");
+            if (name != null) {
+                socket.emit('register', name.toString());
+            }
+            else {
+                socket.emit('register', name.toString());
+            }
         }
+
+        //input user id
+        myFunction();
+
+
+        $('form').submit(function(){
+
+          socket.emit('chat message', $('#m').val());
+          $('#m').val(''); //reset input value
+          return false;
+        });
+
+        socket.on('chat message', function(data){
+          console.log('socketname'+ data.username);
+          console.log('name'+ name);
+          var showname = name == data.username ? 'Me' : data.username;
+          $('#messages').append($('<li>').text( showname+ ': '+data.msg));
+        });
+
+
+        socket.on('user left', function(data){
+          $('#messages').append($('<li>').text(data.username+ ' is leaving.'));
+        })
+
+        $("#m").keydown(function(event){
+          if ( event.which == 13 ){
+            $('#send').click();
+          }
+        });
       });
+
     </script>
   </body>
 </html>

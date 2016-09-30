@@ -19,18 +19,13 @@
       var name ='guest';
       var socket = io();
       $(document).ready(function(){
-        function myFunction() {
-            name = prompt("Please enter your name", "test");
-            if (name != null) {
-                socket.emit('register', name.toString());
-            }
-            else {
-                socket.emit('register', name.toString());
-            }
+        name = prompt("Please enter your name", "test");
+        if (name != null) {
+            socket.emit('register', name.toString());
         }
-
-        //input user id
-        myFunction();
+        else {
+            socket.emit('register', name.toString());
+        }
 
 
         $('form').submit(function(){
@@ -59,7 +54,7 @@
         });
       });
 
-    </script>    
+    </script>
   </head>
   <body>
     <ul id="messages"></ul>

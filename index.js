@@ -9,6 +9,7 @@ app.get('/', function(req, res){
 
 var test = io.of('/test');
 var room = 'room';
+var port = process.env.PORT ||3000;
 test.on('connection', function(socket){
 
   //add user
@@ -53,6 +54,6 @@ test.on('connection', function(socket){
 
 
 
-http.listen(3000, function(){
+http.listen(port, function(){
   console.log('listening on *:3000');
 });

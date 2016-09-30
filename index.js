@@ -7,16 +7,18 @@ app.get('/', function(req, res){
 });
 
 
-var test = io.of('/test');
+//var test = io.of('');
 var room = 'room';
 var port = process.env.PORT ||3000;
-test.on('connection', function(socket){
+
+
+io.on('connection', function(socket){
 
   //add user
   socket.on('register', function(id){
     console.log(id+' is connected to server.');
 
-    test.to(room).emit('chat message', { 'username' : id, 'msg': 'is joing the party. '});
+    io.to(room).emit('chat message', { 'username' : id, 'msg': 'is joing the party. '});
     //socket.broadcast.emit('chat message', id+ ' is coming!'); //for not self
 
     socket.username = id;
@@ -39,13 +41,13 @@ test.on('connection', function(socket){
   //receive event
   socket.on('chat message', function(msg){
 
-    test.to(room).emit('chat message',{ 'username' : socket.username, 'msg': msg});
+    io.to(room).emit('chat message',{ 'username' : socket.username, 'msg': msg});
   });
 
 
   socket.on('disconnect', function(soceket){
     console.log(socket.username + ' bye!' );
-    test.to(room).emit('user left', {'username': socket.username});
+    io.to(room).emit('user left', {'username': socket.username});
 
   });
 
